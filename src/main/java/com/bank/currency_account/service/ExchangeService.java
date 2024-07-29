@@ -23,7 +23,7 @@ public class ExchangeService {
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public List<AccountDto> exchange(ExchangeCommand command) {
         List<Account> accounts = userService.getUserAccountsByPesel(command.pesel());
-        double exchangeRate = exchangeRateService.getBid(command);
+        BigDecimal exchangeRate = exchangeRateService.getBid(command);
         Account accountFrom = accounts.stream()
                 .filter(p-> p.getCurrency().equals(command.currencyFrom().toString()))
                 .findFirst()
@@ -34,7 +34,7 @@ public class ExchangeService {
                 .orElseThrow(CurrencyAccountNotFoundException::new);
         checkAccountBalance(command, accountFrom);
         accountFrom.setBalance(accountFrom.getBalance().subtract(command.amount()));
-        accountTo.setBalance(accountTo.getBalance().add(command.amount().multiply(BigDecimal.valueOf(exchangeRate))));
+        accountTo.setBalance(accountTo.getBalance().add(command.amount().multiply(exchangeRate)));
         return Arrays.asList(AccountDto.fromAccount(accountFrom), AccountDto.fromAccount(accountTo));
     }
 

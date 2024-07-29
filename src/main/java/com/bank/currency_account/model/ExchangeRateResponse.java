@@ -4,7 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
+
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -21,25 +24,25 @@ public class ExchangeRateResponse {
     public static class Rate {
         private String no;
         private String effectiveDate;
-        private double bid;
-        private double ask;
+        private BigDecimal bid;
+        private BigDecimal ask;
 
 
         public enum RateType {
             BID {
                 @Override
-                public double getValue(Rate rate) {
+                public BigDecimal getValue(Rate rate) {
                     return rate.getBid();
                 }
             },
             ASK {
                 @Override
-                public double getValue(Rate rate) {
-                    return 1/rate.getAsk();
+                public BigDecimal getValue(Rate rate) {
+                    return BigDecimal.ONE.divide(rate.getAsk(), 4, RoundingMode.HALF_UP);
                 }
             };
 
-            public abstract double getValue(Rate rate);
+            public abstract BigDecimal getValue(Rate rate);
         }
     }
 }

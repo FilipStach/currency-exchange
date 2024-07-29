@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -18,8 +19,8 @@ import java.util.List;
 public class ExchangeRateService {
     private final ExchangeRateClient exchangeRateClient;
 
-    @Cacheable(cacheNames = "exchangeRates", key = "#command.currencyTo")
-    public double getBid(ExchangeCommand command) {
+    @Cacheable(cacheNames = "exchangeRates", key = "#command.currencyFrom + '_' + #command.currencyTo")
+    public BigDecimal getBid(ExchangeCommand command) {
         ExchangeRateResponse.Rate.RateType rateType;
         String currency;
         if(command.currencyFrom() == Account.Currency.PLN){
