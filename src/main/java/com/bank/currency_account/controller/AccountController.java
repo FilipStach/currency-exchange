@@ -1,6 +1,5 @@
 package com.bank.currency_account.controller;
 
-import com.bank.currency_account.model.Account;
 import com.bank.currency_account.model.command.CreateAccountCommand;
 import com.bank.currency_account.model.dto.AccountDto;
 import com.bank.currency_account.service.AccountService;

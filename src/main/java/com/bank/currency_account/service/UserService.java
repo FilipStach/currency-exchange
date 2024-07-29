@@ -49,7 +49,6 @@ public class UserService {
         User user = new User(command.pesel(), command.name(), command.surname());
         Account account = new Account(user, command.balance(), Account.Currency.PLN);
         user.addAccount(account);
-
         user = userRepository.save(user);
         accountRepository.save(account);
         return UserDto.fromUser(user);

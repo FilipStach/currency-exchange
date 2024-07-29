@@ -3,11 +3,9 @@ package com.bank.currency_account.controller;
 import com.bank.currency_account.model.command.ExchangeCommand;
 import com.bank.currency_account.model.dto.AccountDto;
 import com.bank.currency_account.service.ExchangeService;
-import com.bank.currency_account.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.ScopeMetadata;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +19,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/exchange")
 public class ExchangeController {
-    private final UserService userService;
     private final ExchangeService exchangeService;
 
     @PostMapping
